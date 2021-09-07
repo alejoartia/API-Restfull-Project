@@ -9,6 +9,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
 from .models import Person
 from .serializers import PersonSerializer
 
@@ -16,6 +21,8 @@ from .serializers import PersonSerializer
 class PersonList(generics.ListCreateAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_class = (TokenAuthentication,)
 
 
 class Login(FormView):
@@ -37,3 +44,13 @@ class Login(FormView):
         if token:
             login(self.request, form.get_user())
             return super(Login,self).form_valid(form)
+
+
+class Logout(APIView):
+
+    def get(self, request, *args, **kwargs):
+
+        request.user.auth_token.delete()
+        logout(request)
+        return Response({'result: YOU ARE LOGGED OUT': True})
+        #return Response({'result:YOU ARE LOGGED OUT': False})

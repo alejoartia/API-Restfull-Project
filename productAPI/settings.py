@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'api',
 ]
-
+"""  se usa para autenticacion o permisos de todo el proyecto 
 REST_FRAMEWORK =  {
     'DEFAULT_AUTHENTICATION_CLASSES':(
         'rest_framework.authentication.TokenAuthentication',
@@ -51,7 +51,7 @@ REST_FRAMEWORK =  {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-}
+}"""
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

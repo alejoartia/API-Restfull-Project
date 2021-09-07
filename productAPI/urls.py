@@ -18,6 +18,7 @@ from django.urls import path
 from api.api import UserAPI
 from api.views import PersonList
 from api.views import Login
+from api.views import Logout
 from rest_framework.authtoken import views
 
 
@@ -27,4 +28,5 @@ urlpatterns = [
     path('api/person/2.0/', PersonList.as_view(), name='person_list'),
     path('api_generate_token/', views.obtain_auth_token),
     path('login/', Login.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
 ]
