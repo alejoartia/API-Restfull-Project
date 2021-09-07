@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from api.api import UserAPI
 from api.views import PersonList
+from rest_framework.authtoken import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/create_user/1.0/',UserAPI.as_view(), name="api_create_user"),
     path('api/person/2.0/',PersonList.as_view(), name='person_list'),
+    path('api_generate_token/', views.obtain_auth_token),
 ]
