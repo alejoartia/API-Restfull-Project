@@ -1,0 +1,56 @@
+[33mcommit 3065fa69a867729be4b16b2f975e1b5d2c641f1b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: alejo <alejo.artia@gmail.com>
+Date:   Wed Sep 8 14:08:52 2021 -0500
+
+    se agrega las vistas basadas en clases para todos los modelos en viws.py, se agregan urls para endpoints y se agrega en admin.py para poder administrar las tablas desde allí.
+
+[33mcommit 3107dc1d325634842a22457416f14dce95b09fa7[m
+Author: alejo <alejo.artia@gmail.com>
+Date:   Tue Sep 7 23:41:49 2021 -0500
+
+    Se realiza el CRUD y con los modelos Client, product y Bill, se realizan serializers y esta probado cada enpoint con peticiones HTTP
+
+[33mcommit 0d7430da522ab6dda61e2054de6b69568a4814ee[m
+Author: alejo <alejo.artia@gmail.com>
+Date:   Tue Sep 7 17:03:59 2021 -0500
+
+    back up antes de crud
+
+[33mcommit f1f926253138ff505348b4d9fee1dbabec39347e[m
+Author: alejo <alejo.artia@gmail.com>
+Date:   Tue Sep 7 13:58:16 2021 -0500
+
+    Anlogin usuario con token y template html
+
+[33mcommit a9a1e230880f708c7d5ca49a423c38a4c0ade6f7[m
+Merge: 4bceb44 5f22b5a
+Author: alejo <alejo.artia@gmail.com>
+Date:   Tue Sep 7 12:48:35 2021 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 4bceb44c7ec43aa2025882041fcbfc5bf3bb84e2[m
+Author: alejo <alejo.artia@gmail.com>
+Date:   Tue Sep 7 12:47:35 2021 -0500
+
+    Anexo de validacion con JWT sin login token authentication se creo una tabla personas para validar el funcionamiento de JWT
+
+[33mcommit b5da587ce03c6af46f8a52d37b43947e00e125aa[m
+Author: alejo <alejo.artia@gmail.com>
+Date:   Tue Sep 7 12:41:58 2021 -0500
+
+    Segundo commit
+
+[33mcommit 5f22b5a731632f1d953e37d103e5aa3b5dc34487[m
+Author: AlejandroCordobaM <69881964+AlejandroCordobaM@users.noreply.github.com>
+Date:   Tue Sep 7 04:10:22 2021 -0500
+
+    Create README.md
+    
+    Settings file
+
+[33mcommit 2c4b92c65db129e7e5ccce78145de7933058bc94[m
+Author: alejo <alejo.artia@gmail.com>
+Date:   Tue Sep 7 04:08:33 2021 -0500
+
+    helloworld
