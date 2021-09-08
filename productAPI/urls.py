@@ -20,6 +20,9 @@ from api.views import PersonList
 from api.views import Login
 from api.views import Logout
 from rest_framework.authtoken import views
+from django.conf.urls import url, include
+from django.contrib import admin
+from django.urls import path, include
 
 
 urlpatterns = [
@@ -29,4 +32,7 @@ urlpatterns = [
     path('api_generate_token/', views.obtain_auth_token),
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
+    path('api/3.0/', include(('api.url', 'api'))),
+    path('', include('api.url')),
+    #path('admin/', admin.site.urls), url(r'^', include('productAPI.urls'))
 ]
