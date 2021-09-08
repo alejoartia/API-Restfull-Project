@@ -33,7 +33,7 @@ class Products(models.Model):
 
 class Bills(models.Model):
     id = models.AutoField(primary_key=True, null=False)
-    client_id = models.ForeignKey('Clients',on_delete=models.CASCADE,)
+    client_id = models.ForeignKey('Clients', on_delete=models.CASCADE,)
     company_name = models.CharField(max_length=200, null=False)
     nit = models.IntegerField( null=False)
     code = models.CharField(max_length=255,null=False, unique=True)

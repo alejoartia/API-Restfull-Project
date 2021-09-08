@@ -66,80 +66,131 @@ class Logout(APIView):
 
 
 # Create your views here.
-@api_view(['GET','POST'])
-def clientApi(request, id=0):
-    if request.method == 'GET':
-        clients = Clients.objects.all()
-        clients_serializer = ClientSerializer(clients, many=True)
-        return JsonResponse(clients_serializer.data, safe=False)
+class clients(generics.ListCreateAPIView):
+    queryset = Clients.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_class = (TokenAuthentication,)
 
-    elif request.method == 'POST':
-        clients_data = JSONParser().parse(request)
-        clients_serializer = ClientSerializer(data=clients_data, many=True)
-        if clients_serializer.is_valid():
-            clients_serializer.save()
-        return JsonResponse("Added successfully", safe=False)
+    @api_view(['GET','POST'])
+    def clientApi(request, id=0):
+        if request.method == 'GET':
+            clients = Clients.objects.all()
+            clients_serializer = ClientSerializer(clients, many=True)
+            return JsonResponse(clients_serializer.data, safe=False)
 
-    elif request.method == 'PUT':
-        clients_data = JSONParser().parse(request)
-        clients = Clients.objects.get(id=clients_data['id'])
-        clients_serializer = ClientSerializer(clients, data=clients_data)
-        if clients_serializer.is_valid():
-            clients_serializer.save()
-            return JsonResponse("Updated successfully", safe=False)
-        return JsonResponse("Failed to Update")
-
-    elif request.method == 'DELETE':
-        clients = Clients.objects.get(id=id)
-        clients.delete()
-        return JsonResponse("Delete successfully", safe=False)
-
-
-@api_view(['GET','POST'])
-def productApi(request, id=0):
-    if request.method == 'GET':
-        products = Products.objects.all()
-        products_serializer = ProductSerializer(products, many=True)
-        return JsonResponse(products_serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        products_data = JSONParser().parse(request)
-        products_serializer = ProductSerializer(data=products_data, many=True)
-        if products_serializer.is_valid():
-            products_serializer.save()
+        elif request.method == 'POST':
+            clients_data = JSONParser().parse(request)
+            clients_serializer = ClientSerializer(data=clients_data, many=True)
+            if clients_serializer.is_valid():
+                clients_serializer.save()
             return JsonResponse("Added successfully", safe=False)
-        return JsonResponse("Failed to Add", safe=False)
 
-    elif request.method == 'PUT':
-        products_data = JSONParser().parse(request)
-        products = Products.objects.get(id=products_data['id'])
-        products_serializer = ProductSerializer(products, data=products_data)
-        if products_serializer.is_valid():
-            products_serializer.save()
-            return JsonResponse("Updated successfully", safe=False)
-        return JsonResponse("Failed to Update")
+        elif request.method == 'PUT':
+            clients_data = JSONParser().parse(request)
+            clients = Clients.objects.get(id=clients_data['id'])
+            clients_serializer = ClientSerializer(clients, data=clients_data)
+            if clients_serializer.is_valid():
+                clients_serializer.save()
+                return JsonResponse("Updated successfully", safe=False)
+            return JsonResponse("Failed to Update")
 
-    elif request.method == 'DELETE':
-        products = Products.objects.get(id=id)
-        products.delete()
-        return JsonResponse("Delete successfully", safe=False)
-
-
-@api_view(['GET','POST'])
-def saveClients(request):
-    file = request.FILES['clients']
-    readFile(file)
-    return JsonResponse('test', safe=False)
+        elif request.method == 'DELETE':
+            clients = Clients.objects.get(id=id)
+            clients.delete()
+            return JsonResponse("Delete successfully", safe=False)
 
 
-def readFile(file):
-    results = []
-    with open(str(file)) as File:
-        reader = csv.DictReader(File)
-        for row in reader:
-            results.append(row)
-        print(results)
-        print(json.dumps(results))
+class products(generics.ListCreateAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_class = (TokenAuthentication,)
 
-    #csv_data = pd.read_csv(str(file), sep=",")
-    #csv_data.to_json("test.json", orient="records")
+    @api_view(['GET','POST'])
+    def productApi(request, id=0):
+        if request.method == 'GET':
+            products = Products.objects.all()
+            products_serializer = ProductSerializer(products, many=True)
+            return JsonResponse(products_serializer.data, safe=False)
+
+        elif request.method == 'POST':
+            products_data = JSONParser().parse(request)
+            products_serializer = ProductSerializer(data=products_data, many=True)
+            if products_serializer.is_valid():
+                products_serializer.save()
+                return JsonResponse("Added successfully", safe=False)
+            return JsonResponse("Failed to Add", safe=False)
+
+        elif request.method == 'PUT':
+            products_data = JSONParser().parse(request)
+            products = Products.objects.get(id=products_data['id'])
+            products_serializer = ProductSerializer(products, data=products_data)
+            if products_serializer.is_valid():
+                products_serializer.save()
+                return JsonResponse("Updated successfully", safe=False)
+            return JsonResponse("Failed to Update")
+
+        elif request.method == 'DELETE':
+            products = Products.objects.get(id=id)
+            products.delete()
+            return JsonResponse("Delete successfully", safe=False)
+
+
+class Bill(generics.ListCreateAPIView):
+    queryset = Bills.objects.all()
+    serializer_class = BillSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_class = (TokenAuthentication,)
+
+    @api_view(['GET','POST'])
+    def BIllApi(request, id=0):
+        if request.method == 'GET':
+            bills = Bills.objects.all()
+            bills_serializer = BillSerializer(bills, many=True)
+            return JsonResponse(bills_serializer.data, safe=False)
+
+        elif request.method == 'POST':
+            bills_data = JSONParser().parse(request)
+            bills_serializer = BillSerializer(data=bills_data, many=True)
+            if bills_serializer.is_valid():
+                bills_serializer.save()
+                return JsonResponse("Added successfully", safe=False)
+            return JsonResponse("Failed to Add", safe=False)
+
+        elif request.method == 'PUT':
+            bills_data = JSONParser().parse(request)
+            bills = Bills.objects.get(id=bills_data['id'])
+            bills_serializer = ProductSerializer(bills, data=bills_data)
+            if bills_serializer.is_valid():
+                bills_serializer.save()
+                return JsonResponse("Updated successfully", safe=False)
+            return JsonResponse("Failed to Update")
+
+        elif request.method == 'DELETE':
+            bills = Bills.objects.get(id=id)
+            bills.delete()
+            return JsonResponse("Delete successfully", safe=False)
+
+
+class saveclients(generics.ListCreateAPIView):
+    queryset = Clients.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_class = (TokenAuthentication,)
+
+    @api_view(['GET','POST'])
+    def saveClients(request):
+        file = request.FILES['clients']
+        request.readFile(file)
+        return JsonResponse('test', safe=False)
+
+
+    def readFile(file):
+        results = []
+        with open(str(file)) as File:
+            reader = csv.DictReader(File)
+            for row in reader:
+                results.append(row)
+            print(results)
+            print(json.dumps(results))
