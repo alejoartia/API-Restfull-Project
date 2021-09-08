@@ -68,9 +68,9 @@ class Logout(APIView):
 # Create your views here.
 class clients(generics.ListCreateAPIView):
     queryset = Clients.objects.all()
-    serializer_class = ClientSerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_class = (TokenAuthentication,)
+    serializer_class = ClientSerializer(many=True)
+    #permission_classes = (IsAuthenticated,)
+    #authentication_class = (TokenAuthentication,)
 
     @api_view(['GET','POST'])
     def clientApi(request, id=0):
