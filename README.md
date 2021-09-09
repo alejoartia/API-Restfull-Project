@@ -34,7 +34,7 @@ NOTA: en caso de que las migraciones no ejecuten correr los siguiente comandos
 //ejecuta las migraciones en la bd: $python manage.py migrate                    
 
 
-##para django admin 
+## para django admin 
 $ http://localhost:8000/admin/
 
 de .models fueron importadas Person, Clients, Products, Bills, BillProducts
@@ -50,7 +50,7 @@ esto con el fin de actualizar las tablas y gestionarlas desde django admin
 
 -------------------------------------------------------------------
 
-#LETS' GO INSIDE
+# LETS' GO INSIDE
 
 ## 1) ENDPOINT PARA CREACION(registro) DE USUARIOS
 
@@ -88,7 +88,7 @@ Nota: en su defecto crear otro usuario
 
 En caso de estar logeado y se necesita deslogear se puede usar el siguiente endpoint:
 
-$ http://localhost:8000/logout/
+$ http://localhost:8000/logout/  
 
 
 ## 3) LOS ENDPOINTS ESTAN ASEGURADOS (GENERAR TOKEN)
@@ -112,7 +112,7 @@ se puede cambiar los valores
 
 
 La relacion de la base de datos se documenta en el siguiente archivo:
-###DATABASE.txt 
+$ DATABASE.txt 
 dentro del repositorio 
 
 
@@ -120,7 +120,7 @@ Se puede usar un gestor de peticiones HTTP pero si pone el enpoint en el navegad
 
 
 
-###client:
+### client:
 
 Para crear o consultar clientes se puede usar el siguiente endopoint
 
@@ -140,7 +140,7 @@ NOTA: recuerde cambiar los campos ya que estos ya estan creados
     }
 
 
-###product:
+### product:
 
 Para crear o consultar productos  se puede usar el siguiente end point
 
@@ -159,7 +159,7 @@ NOTA: recuerde cambiar los campos ya que estos ya estan creados
         "update_at": "2021-09-08"
     },
 
-###bill:
+### bill:
 
 para crear o consultar la factura se puede usar el siguiente end point:
 
@@ -181,7 +181,7 @@ NOTA: recuerde cambiar los campos ya que estos ya estan creados
 
 
 
-###bill products:
+### bill products:
 
 para crear o consultar la factura detallada se puede usar el siguiente end point:
 
@@ -236,7 +236,110 @@ este recibe el archivo, lo lee y lo transforma a formato JSON sin embargo aun no
 
 
 
+________________________________________________________________________________________________________________________________________
 
 
+## CONFIGURACION Y ESQUEMA DE BASES DE DATOS 
+
+
+En este proyecto o prueba se uso la base de datos por defecto:
+
+           DATABASES = {
+               'default': {
+                   'ENGINE': 'django.db.backends.sqlite3',
+                   'NAME': BASE_DIR / 'db.sqlite3',
+               }
+           }
+
+
+sin embargo si se quiere usar otra con Postgrest se recomienda:
+
+
+
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.postgresql',
+                    'NAME': 'test',
+                    'USER':'postgres',
+                    'PASSWORD':'ROOT',
+                    'HOST':'localhost',
+                    'PORT':'5432'
+
+                }
+            }
+
+## EL SIGUIENTE ES EL SCRIPT SQL PARA GENERAR LA BASE DE DATOS EN CASO DE NECESITARSE 
+NOTA: DENTRO DEL REPOSITORIO HAY UNA IMAGEN CON EL ESQUEMA Y LAS RELACIONES DE LA BASE DE DATOS 
+
+            CREATE DATABASE TEST;
+
+            CREATE table IF NOT EXISTS clients (
+            id serial PRIMARY KEY,
+            document VARCHAR (50) UNIQUE NOT NULL,
+            first_name VARCHAR (200) NOT NULL,
+                last_name VARCHAR (200) NOT NULL,
+            email VARCHAR (255) UNIQUE NOT NULL,
+            created_on TIMESTAMP NOT null DEFAULT now(),
+            update_at TIMESTAMP NOT null DEFAULT now());
+
+            CREATE table IF NOT EXISTS bills (
+            id serial PRIMARY KEY,
+            client_id INT NOT NULL,
+            company_name VARCHAR (200) NOT NULL,
+                nit INT NOT NULL,
+            code VARCHAR (255) UNIQUE NOT NULL,
+            created_on TIMESTAMP NOT null DEFAULT now(),
+            update_at TIMESTAMP NOT null DEFAULT now(),
+            FOREIGN KEY (client_id)
+                  REFERENCES clients (id)
+            );
+
+            CREATE table IF NOT EXISTS products (
+            id serial PRIMARY KEY,
+            name VARCHAR (100) NOT NULL,
+            description VARCHAR (250),
+            price FLOAT4 NOT NULL,
+                stock INT NOT NULL,
+            created_on TIMESTAMP NOT null DEFAULT now(),
+            update_at TIMESTAMP NOT null DEFAULT now());
+
+
+            CREATE table IF NOT EXISTS billProducts (
+            id serial PRIMARY KEY,
+            bill_id INT NOT NULL,
+            product_id INT NOT NULL,
+            created_on TIMESTAMP NOT null DEFAULT now(),
+            update_at TIMESTAMP NOT null DEFAULT now(),
+            FOREIGN KEY (bill_id)
+                  REFERENCES bills (id),
+                FOREIGN KEY (product_id)
+                  REFERENCES products (id));
+
+            ---Poblado de datos incial
+
+             INSERT INTO public.clients
+            (id, "document", first_name, last_name, email, created_on, update_at)
+            VALUES(1, '123654789', 'Alejandro', 'cordoba', 'prueba@gmail.com', '2021-09-06 23:52:22.446', '2021-09-06 23:52:22.446');
+
+
+            INSERT INTO public.products
+            (id, "name", description, price, stock, created_on, update_at)
+            VALUES(1, 'papa', 'papas de pollo', 1500.0, 3, '2021-09-07 00:26:58.869', '2021-09-07 00:26:58.869');
+            INSERT INTO public.products
+            (id, "name", description, price, stock, created_on, update_at)
+            VALUES(2, 'arroz', 'arroz del llano', 2000.0, 5, '2021-09-07 00:27:23.654', '2021-09-07 00:27:23.654');
+
+
+             INSERT INTO public.bills
+            (id, client_id, company_name, nit, code, created_on, update_at)
+            VALUES(1, 1, 'yayas', 123456987, '1', '2021-09-07 00:28:02.365', '2021-09-07 00:28:02.365');
+
+
+            INSERT INTO public.billsproducts
+            (id, bill_id, product_id, created_on, update_at)
+            VALUES(1, 1, 1, '2021-09-07 00:28:20.699', '2021-09-07 00:28:20.699');
+            INSERT INTO public.billsproducts
+            (id, bill_id, product_id, created_on, update_at)
+            VALUES(2, 1, 2, '2021-09-07 00:28:20.699', '2021-09-07 00:28:20.699');
 
 
