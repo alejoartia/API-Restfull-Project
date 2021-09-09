@@ -76,12 +76,13 @@ recuerde si no se encuentra logeado no podra acceder a las rutas de clientes, pr
 ya que no tendra el JSON Web Token
 
 *El endpoint es:*
+
 $ http://localhost:8000/login/
 
 el usuario que puede usar para probar es:
 
-Username: alejandro
-password: 12345678
+    Username: alejandro
+    password: 12345678
 
 Nota: en su defecto crear otro usuario
 
@@ -115,12 +116,12 @@ La relacion de la base de datos se documenta en el siguiente archivo:
 dentro del repositorio 
 
 
-
 Se puede usar un gestor de peticiones HTTP pero si pone el enpoint en el navegador sera capaz de enviar las peticiones desde alli debido al gestor de django, se crearon vistas basadas en clases para cada uno de estos.
 
 
 
 ###client:
+
 Para crear o consultar clientes se puede usar el siguiente endopoint
 
 $ http://localhost:8000/client/
@@ -140,6 +141,7 @@ NOTA: recuerde cambiar los campos ya que estos ya estan creados
 
 
 ###product:
+
 Para crear o consultar productos  se puede usar el siguiente end point
 
 $ http://localhost:8000/products/
@@ -158,6 +160,7 @@ NOTA: recuerde cambiar los campos ya que estos ya estan creados
     },
 
 ###bill:
+
 para crear o consultar la factura se puede usar el siguiente end point:
 
 $ http://localhost:8000/bills/
@@ -179,6 +182,7 @@ NOTA: recuerde cambiar los campos ya que estos ya estan creados
 
 
 ###bill products:
+
 para crear o consultar la factura detallada se puede usar el siguiente end point:
 
 $ http://localhost:8000/bills/products/
@@ -212,21 +216,21 @@ se creo un metodo que permite leer el archivo que se encuentra en la carpeta del
 
 $ clients.csv
 
-$ @api_view(['GET','POST'])
-$ def saveClients(request):
-$        file = request.FILES['clients']
-$        request.readFile(file)
-$        return JsonResponse('test', safe=False)
-$
-$ def readFile(file):
-$        results = []
-$        with open(str(file)) as File:
-$            reader = csv.DictReader(File)
-$            for row in reader:
-$                results.append(row)
-$            print(results)
-$            print(json.dumps(results))
-            
+                    @api_view(['GET','POST'])
+                    def saveClients(request):
+                           file = request.FILES['clients']
+                           request.readFile(file)
+                           return JsonResponse('test', safe=False)
+
+                    def readFile(file):
+                           results = []
+                           with open(str(file)) as File:
+                               reader = csv.DictReader(File)
+                               for row in reader:
+                                   results.append(row)
+                               print(results)
+                               print(json.dumps(results))
+
             
 este recibe el archivo, lo lee y lo transforma a formato JSON sin embargo aun no carga a CLIENTES, pero queda estructurado para finalizar la carga y luego la descarga de un archivo CSV 
 
