@@ -100,10 +100,11 @@ $ http://localhost:8000/api_generate_token/
 
 con metodo post se puede probar 
 se puede cambiar los valores
-{
-    "username": "alejandro",
-    "password": "12345678"
-}
+
+        {
+            "username": "alejandro",
+            "password": "12345678"
+        }
 
 
 ## CONSULTA DE PRODUCTOS, CLIENTES Y BILLS 
@@ -165,7 +166,7 @@ ejemplo para enviar HTTP json,  recuerde quitar id( se crea automaticamente)
 NOTA: recuerde cambiar los campos ya que estos ya estan creados 
 
 
- {
+    {
         "id": 1,
         "client_id": 1,
         "company_name": "Seaboard",
@@ -189,13 +190,15 @@ en bills products se recomienda usar el form ya que este detail se crea con llav
 
 
 SIN EMBARGO SE DEJA EL EJEMPLO:
-{
-    "id": 1,
-    "bill_id": 1,
-    "product_id": 1,
-    "created_on": "2021-09-08",
-    "update_at": "2021-09-08"
-}
+    
+    
+    {
+        "id": 1,
+        "bill_id": 1,
+        "product_id": 1,
+        "created_on": "2021-09-08",
+        "update_at": "2021-09-08"
+    }
 
 
 
@@ -209,21 +212,20 @@ se creo un metodo que permite leer el archivo que se encuentra en la carpeta del
 
 $ clients.csv
 
-@api_view(['GET','POST'])
-def saveClients(request):
-        file = request.FILES['clients']
-        request.readFile(file)
-        return JsonResponse('test', safe=False)
-
-
-def readFile(file):
-        results = []
-        with open(str(file)) as File:
-            reader = csv.DictReader(File)
-            for row in reader:
-                results.append(row)
-            print(results)
-            print(json.dumps(results))
+$ @api_view(['GET','POST'])
+$ def saveClients(request):
+$        file = request.FILES['clients']
+$        request.readFile(file)
+$        return JsonResponse('test', safe=False)
+$
+$ def readFile(file):
+$        results = []
+$        with open(str(file)) as File:
+$            reader = csv.DictReader(File)
+$            for row in reader:
+$                results.append(row)
+$            print(results)
+$            print(json.dumps(results))
             
             
 este recibe el archivo, lo lee y lo transforma a formato JSON sin embargo aun no carga a CLIENTES, pero queda estructurado para finalizar la carga y luego la descarga de un archivo CSV 
