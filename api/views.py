@@ -68,9 +68,9 @@ class Logout(APIView):
 # Create your views here.
 class clients(generics.ListCreateAPIView):
     queryset = Clients.objects.all()
-    serializer_class = ClientSerializer(many=True)
-    #permission_classes = (IsAuthenticated,)
-    #authentication_class = (TokenAuthentication,)
+    serializer_class = ClientSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_class = (TokenAuthentication,)
 
     @api_view(['GET','POST'])
     def clientApi(request, id=0):
@@ -161,7 +161,7 @@ class Bill(generics.ListCreateAPIView):
         elif request.method == 'PUT':
             bills_data = JSONParser().parse(request)
             bills = Bills.objects.get(id=bills_data['id'])
-            bills_serializer = ProductSerializer(bills, data=bills_data)
+            bills_serializer = BillSerializer(bills, data=bills_data)
             if bills_serializer.is_valid():
                 bills_serializer.save()
                 return JsonResponse("Updated successfully", safe=False)
@@ -173,20 +173,51 @@ class Bill(generics.ListCreateAPIView):
             return JsonResponse("Delete successfully", safe=False)
 
 
-class saveclients(generics.ListCreateAPIView):
-    queryset = Clients.objects.all()
-    serializer_class = ClientSerializer
+class BillsProducts(generics.ListCreateAPIView):
+    queryset = BillProducts.objects.all()
+    serializer_class = BillProductSerializer
     permission_classes = (IsAuthenticated,)
     authentication_class = (TokenAuthentication,)
 
     @api_view(['GET','POST'])
-    def saveClients(request):
+    def BillProductsApi(request, id=0):
+        if request.method == 'GET':
+            billproducts = BillProducts.objects.all()
+            billproducts_serializer = BillProductSerializer(billproducts, many=True)
+            return JsonResponse(billproducts_serializer.data, safe=False)
+
+        elif request.method == 'POST':
+            billProducts_data = JSONParser().parse(request)
+            billProducts_serializer = BillProductSerializer(data=billProducts_data, many=True)
+            if billProducts_serializer.is_valid():
+                billProducts_serializer.save()
+                return JsonResponse("Added successfully", safe=False)
+            return JsonResponse("Failed to Add", safe=False)
+
+        elif request.method == 'PUT':
+            billProducts_data = JSONParser().parse(request)
+            billProducts = BillProducts.objects.get(id=billProducts_data['id'])
+            billProducts_serializer = BillProductSerializer(billProducts, data=billProducts_data)
+            if billProducts_serializer.is_valid():
+                billProducts_serializer.save()
+                return JsonResponse("Updated successfully", safe=False)
+            return JsonResponse("Failed to Update")
+
+        elif request.method == 'DELETE':
+            billProducts = BillProducts.objects.get(id=id)
+            billProducts.delete()
+            return JsonResponse("Delete successfully", safe=False)
+
+
+
+@api_view(['GET','POST'])
+def saveClients(request):
         file = request.FILES['clients']
         request.readFile(file)
         return JsonResponse('test', safe=False)
 
 
-    def readFile(file):
+def readFile(file):
         results = []
         with open(str(file)) as File:
             reader = csv.DictReader(File)
