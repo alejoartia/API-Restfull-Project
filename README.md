@@ -1,4 +1,10 @@
-# TestQuick
+# API PROYECTO-ARTIA
+
+Este proyecto puede ser usado como una base para la creacion de un API mas avanzada,
+aqui podrás encontrar modelos de personas,facturas,facturas detalladas y productos 
+con este API se puede autenticar a través de Token y ademas agragar, actualizar, remover y editar los modelos antes mencionados 
+
+Usa la documentacion abajo como guia y suerte con tu proyecto:
 
 ## Setup
 
